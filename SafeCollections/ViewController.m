@@ -22,11 +22,9 @@
 
 
 - (void)testSafe {
-    
     //Array
     NSArray *array  = @[@1, @2];
     
-    NSLog(@"array %@", array);
     NSLog(@"index==== %@", array[2]);
 
     NSMutableArray *muArray = [[NSMutableArray alloc] initWithObjects:@"1", nil];
