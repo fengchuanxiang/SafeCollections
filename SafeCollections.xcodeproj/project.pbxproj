@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		8A4A25CA1C2FE57C00C9877B /* Person.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A4A25C91C2FE57C00C9877B /* Person.m */; };
 		8A56F0AE1C13228E0059A7BC /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A56F0AD1C13228E0059A7BC /* main.m */; };
 		8A56F0B11C13228E0059A7BC /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A56F0B01C13228E0059A7BC /* AppDelegate.m */; };
 		8A56F0B41C13228E0059A7BC /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 8A56F0B31C13228E0059A7BC /* ViewController.m */; };
@@ -17,6 +18,8 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		8A4A25C81C2FE57C00C9877B /* Person.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Person.h; sourceTree = "<group>"; };
+		8A4A25C91C2FE57C00C9877B /* Person.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Person.m; sourceTree = "<group>"; };
 		8A56F0A91C13228E0059A7BC /* SafeCollections.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SafeCollections.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		8A56F0AD1C13228E0059A7BC /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		8A56F0AF1C13228E0059A7BC /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -67,6 +70,8 @@
 				8A56F0B31C13228E0059A7BC /* ViewController.m */,
 				8A56F0C31C1322A90059A7BC /* FCXSafeCollection.h */,
 				8A56F0C41C1322A90059A7BC /* FCXSafeCollection.m */,
+				8A4A25C81C2FE57C00C9877B /* Person.h */,
+				8A4A25C91C2FE57C00C9877B /* Person.m */,
 				8A56F0B51C13228E0059A7BC /* Main.storyboard */,
 				8A56F0B81C13228F0059A7BC /* Assets.xcassets */,
 				8A56F0BA1C13228F0059A7BC /* LaunchScreen.storyboard */,
@@ -156,6 +161,7 @@
 			files = (
 				8A56F0B41C13228E0059A7BC /* ViewController.m in Sources */,
 				8A56F0B11C13228E0059A7BC /* AppDelegate.m in Sources */,
+				8A4A25CA1C2FE57C00C9877B /* Person.m in Sources */,
 				8A56F0C51C1322A90059A7BC /* FCXSafeCollection.m in Sources */,
 				8A56F0AE1C13228E0059A7BC /* main.m in Sources */,
 			);
@@ -304,6 +310,7 @@
 				8A56F0C21C13228F0059A7BC /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};
