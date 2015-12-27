@@ -1,10 +1,56 @@
 # SafeCollections
-使用了runtime技术解决项目中经常遇到的数组越界、字典键值对为空操作等闪退问题，
+##解决NSArray、NSMutableArray、NSDictionary、NSMutableDictionary引起的闪退
+使用了MethodSwizzle解决项目中经常遇到的数组越界、字典键值对为空操作等闪退问题，
 在Debug模式会在控制台输出相应的错误原因，并且不会导致程序闪退
+```objc
++ (void)load {
+    
+    static dispatch_once_t onceToken;
+    dispatch_once(&onceToken, ^{
+        
+        //        NSArray
+        [self swizzleInstanceMethodWithClass:NSClassFromString(@"__NSArrayI") originalSelector:@selector(objectAtIndex:) swizzledMethod:@selector(fcx_safeObjectAtIndex:)];
+        
+        //        NSMutableArray
+        [self swizzleInstanceMethodWithClass:NSClassFromString(@"__NSArrayM") originalSelector:@selector(objectAtIndex:) swizzledMethod:@selector(fcx_safeObjectAtIndex:)];
+        //        [self swizzleInstanceMethodWithClass:NSClassFromString(@"__NSArrayM") originalSelector:@selector(addObject:) swizzledMethod:@selector(fcx_safeAddObject:)];
+        [self swizzleInstanceMethodWithClass:NSClassFromString(@"__NSArrayM") originalSelector:@selector(replaceObjectAtIndex:withObject:) swizzledMethod:@selector(fcx_safeReplaceObjectAtIndex:withObject:)];
+        [self swizzleInstanceMethodWithClass:NSClassFromString(@"__NSArrayM") originalSelector:@selector(insertObject:atIndex:) swizzledMethod:@selector(fcx_safeInsertObject:atIndex:)];
+        
+        //        NSDictionary
+        //        [self swizzleClassMethodWithClass:[NSDictionary class] originalSelector:@selector(dictionaryWithObjects:forKeys:count:) swizzledMethod:@selector(fcx_safeDictionaryWithObjects:forKeys:count:)];
+        
+        //        NSMutableDictionary
+        [self swizzleInstanceMethodWithClass:NSClassFromString(@"__NSDictionaryM") originalSelector:@selector(setObject:forKey:) swizzledMethod:@selector(fcx_safeSetObject:forKey:)];
+        
+    });
+}
 
-![](example@3x.png)
+- (void)testSafe {
+    //Array
+    NSArray *array  = @[@1, @2];
+    
+    NSLog(@"index==== %@", array[2]);
+    
+    NSMutableArray *muArray = [[NSMutableArray alloc] initWithObjects:@"1", nil];
+    NSLog(@"****");
+    NSLog(@"=======muarray %@", muArray[2]);
+    
+    [muArray replaceObjectAtIndex:3 withObject:@""];
+    [muArray replaceObjectAtIndex:0 withObject:nil];
+    [muArray insertObject:@2 atIndex:2];
+    
+    
+    //Dict
+    NSMutableDictionary *muDict = [NSMutableDictionary dictionaryWithObjectsAndKeys:@"obj", @"key", nil];
+    
+    [muDict setObject:nil forKey:@"1"];
+    [muDict setObject:@"1" forKey:nil];
+}
 
-#解决KeuValue引起的程序闪退
+```
+
+##解决KeyValue引起的程序闪退
 ```objc
 //当对一个非类对象属性设置nil时，就会执行setNilValueForKey:方法,setNilValueForKey:方法的默认实现,是产生一个NSInvalidArgumentException的异常,但是你可以重写这个方法.
 - (void)setNilValueForKey:(NSString *)key {
@@ -36,5 +82,24 @@
     FCXSCLOG(@"[%@ %@]: this class is not key value coding-compliant for the key %@.", NSStringFromClass([self class]), NSStringFromSelector(_cmd), key);
     return nil;
 }
+
+- (void)testKeyValue {
+    
+    Person *xiaoming = [[Person alloc] init];
+    [xiaoming setValue:@"xiaoming" forKey:@"name"];
+    NSLog(@"name %@", xiaoming.name);
+    [xiaoming setValue:nil forKey:@"name"];
+    [xiaoming setValue:nil forKey:@"array"];
+    //    [xiaoming setValue:nil forKey:@"person1"];
+    [xiaoming setValue:@"aa" forKey:@"age"];
+    //    [xiaoming setValue:nil forKey:@"age"];
+    //    [xiaoming setNilValueForKey:@"age"];
+    NSLog(@"name %@ age %ld", xiaoming.name, xiaoming.age);
+    
+    //    [xiaoming setValue:@"xiaoming" forKey:@"person1"];
+    [xiaoming valueForKey:@"person1"];
+    [xiaoming valueForKey:@"age1"];
+}
+
 ```
 
